@@ -1,0 +1,13 @@
+syntax = "proto3";
+package tenori;
+
+message EchoRequest{
+  string msg = 1;
+  bool log = 2;}
+
+message EchoReply{
+  string resp = 1;}
+
+service EchoService{
+  rpc echo (stream EchoRequest) returns (stream EchoReply) {};
+}

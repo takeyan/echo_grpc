@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    run: echo-grpc
+  name: echo-grpc-deploy
+  namespace: default
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      run: echo-grpc
+  template:
+    metadata:
+      labels:
+        run: echo-grpc
+    spec:
+      containers:
+      - image: takeyan/echo_grpc:0.0.1
+        name: echo-grpc
+        ports:
+        - containerPort: 50051
+        env:
+        - name: K8S_NODE_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: spec.nodeName
+        - name: K8S_POD_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
+        - name: K8S_POD_IP
+          valueFrom:
+            fieldRef:
+              fieldPath: status.podIP

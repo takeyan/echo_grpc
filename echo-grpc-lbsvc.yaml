@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: echo-grpc-lbsvc
+  annotations:
+     service.kubernetes.io/ibm-load-balancer-cloud-provider-ip-type: private
+spec:
+  type: LoadBalancer
+  selector:
+     run: echo-grpc
+  ports:
+    - protocol: TCP
+      port: 50051
